@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset='UTF-8'>
+   <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+   <!-- Add Bootstrap CSS -->
+   <link rel='stylesheet' href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'>
+   <!-- Title -->
+   <title>Add Category</title>
+   <style>
+       body {
+           height: 100vh;
+           display: flex;
+           align-items: center;
+           justify-content: center;
+       }
+       .card {
+           width: 100%;
+           max-width: 400px; /* Limit the width of the card */
+       }
+   </style>
+</head>
+
+<body class="bg-light">
+   <!-- Add Category Form -->
+   <div class="card">
+       <div class="card-header text-center">
+           <h4>Add New Category</h4>
+       </div>
+       <div class="card-body">
+           <form action="/add_category" method="POST">
+               <div class="form-group">
+                   <input type="text" name="category_name" class="form-control" placeholder="Category Name" required>
+               </div>
+               <button type="submit" class="btn btn-primary btn-block">Add Category</button>
+           </form>
+           <p class="text-center mt-2">Once you've added categories, you can go back to your expenses management page.</p>
+       </div>
+   </div>
+
+   <script src='https://code.jquery.com/jquery-3.5.1.slim.min.js'></script>
+   <script src='https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js'></script>
+   <script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script>
+</body>
+
+</html>

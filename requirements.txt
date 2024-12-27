@@ -1,0 +1,9 @@
+Flask==2.2.2
+Flask-Login==0.6.2
+Flask-Bcrypt==1.0.1
+matplotlib==3.7.1
+flask-wtf==1.0.1
+fpdf==1.7.2
+numpy==1.21.6  
+scipy==1.7.3   
+numba==0.55.1

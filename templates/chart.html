@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> <!-- Font Awesome for icons -->
+   <title>Expense Pie Chart</title>
+</head>
+
+<body>
+
+<div class='container mt-5'>
+   <h1 class="text-center">Expense Pie Chart</h1>
+
+   <!-- Button group with icons -->
+   <div class="d-flex justify-content-center mb-4">
+       <a href="/" class="btn btn-secondary mr-3">
+           <i class="fas fa-arrow-left"></i> Back to Expenses
+       </a>
+       <a href="/download_chart" class="btn btn-primary">
+           <i class="fas fa-download"></i> Download Chart as PDF
+       </a>
+   </div>
+
+   <!-- Pie Chart Image -->
+   <div class="text-center">
+       <img src="data:image/png;base64,{{ plot_url }}" alt="Expense Pie Chart" class="img-fluid">
+   </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script> 
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> 
+
+</body> 
+</html>

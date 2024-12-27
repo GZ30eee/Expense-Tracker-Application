@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+   <title>Edit Expense</title>
+</head>
+
+<body>
+
+<div class='container mt-5'>
+   <h1 class="text-center">Edit Expense</h1>
+
+   <!-- Centered Card Form -->
+   <div class="row justify-content-center">
+       <div class="col-md-6">
+           <form action="/edit/{{ expense[0] }}" method='POST' class='mb-4 card p-4 shadow-sm bg-light rounded'>
+               <h4>Edit Expense Details</h4>
+
+               <!-- Category selection -->
+               <select name='category_id' required class='form-control mb-3'>
+                   {% for category in categories %}
+                       <option value="{{ category[0] }}" {% if category[0] == expense[2] %}selected{% endif %}>{{ category[1] }}</option>
+                   {% endfor %}
+               </select>
+
+               <!-- Amount input -->
+               <input type='number' name='amount' placeholder='Amount' step='0.01' required class='form-control mb-3' value="{{ expense[3] }}">
+               
+               <!-- Date input -->
+               <input type='date' name='date' required class='form-control mb-3' value="{{ expense[4] }}">
+               
+               <!-- Submit button -->
+               <button type='submit' class='btn btn-primary btn-block'>Update Expense</button>
+           </form>
+
+           <!-- Link back to index -->
+           <a href="/" class="btn btn-secondary btn-block">Back to Expenses</a>
+       </div>
+   </div>
+</div>
+
+<script src='https://code.jquery.com/jquery-3.5.1.slim.min.js'></script> 
+<script src='https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js'></script> 
+<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script> 
+
+</body> 
+</html>

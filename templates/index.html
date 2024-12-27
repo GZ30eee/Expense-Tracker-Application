@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+   <title>Expense Tracker</title>
+   <style>
+       body {
+           background-color: #f4f7f6;
+       }
+       .modal-content {
+           background-color: #fff;
+       }
+       .table th, .table td {
+           text-align: center;
+       }
+       .table-striped tbody tr:nth-child(odd) {
+           background-color: #f9f9f9;
+       }
+       .card {
+           border-radius: 10px;
+           box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+       }
+       .table {
+           border-radius: 10px;
+           overflow: hidden;
+       }
+       .btn-custom {
+           border-radius: 20px;
+       }
+   </style>
+</head>
+
+<body>
+
+<div class="container mt-5">
+   <h1 class="text-center mb-4">Expense Tracker</h1>
+
+   <!-- Buttons for Add Categories and Show Pie Chart -->
+   <div class="d-flex justify-content-center mb-4">
+    <a href="/add_category" class="btn btn-secondary btn-custom mx-2">
+        <i class="fas fa-plus"></i> Add Category
+    </a>
+    <a href="/show_chart" class="btn btn-info btn-custom mx-2">
+        <i class="fas fa-chart-pie"></i> Show Pie Chart
+    </a>
+    <a href="/download_table" class="btn btn-success btn-custom mx-2">
+        <i class="fas fa-download"></i> Download as PDF
+    </a>
+    <button type="button" class="btn btn-primary btn-custom mx-2" data-toggle="modal" data-target="#addExpenseModal">
+        <i class="fas fa-plus-circle"></i> Add Expense
+    </button>
+</div>
+
+
+   <!-- Add Expense Modal -->
+   <div class="modal fade" id="addExpenseModal" tabindex="-1" role="dialog" aria-labelledby="addExpenseModalLabel" aria-hidden="true">
+       <div class="modal-dialog modal-dialog-centered" role="document">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <h5 class="modal-title" id="addExpenseModalLabel">Add New Expense</h5>
+                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                       <span aria-hidden="true">&times;</span>
+                   </button>
+               </div>
+               <form action="/add" method="POST">
+                   <div class="modal-body">
+                       <div class="form-group">
+                           <label for="categorySelect">Category</label>
+                           <select name="category_id" id="categorySelect" class="form-control" required>
+                               <option value="">Select Category</option>
+                               {% for category in categories %}
+                                   <option value="{{ category[0] }}">{{ category[1] }}</option>
+                               {% endfor %}
+                           </select>
+                       </div>
+                       <div class="form-group">
+                           <label for="amountInput">Amount</label>
+                           <input type="number" name="amount" id="amountInput" placeholder="Amount" step="0.01" required class="form-control">
+                       </div>
+                       <div class="form-group">
+                           <label for="dateInput">Date</label>
+                           <input type="date" name="date" id="dateInput" required class="form-control" value="{{ today }}">
+                       </div>
+                   </div>
+                   <div class="modal-footer">
+                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                       <button type="submit" class="btn btn-primary">Add Expense</button>
+                   </div>
+               </form>
+           </div>
+       </div>
+   </div>
+
+   <!-- Expenses Table -->
+   <h2>Your Expenses</h2>
+
+   {% if expenses %}
+   <table class="table table-striped table-bordered">
+       <thead class="thead-dark">
+           <tr>
+               <th>ID</th>
+               <th>Category</th>
+               <th>Amount</th>
+               <th>Date</th>
+               <th>Action</th>
+           </tr>
+       </thead>
+       <tbody>
+           {% for expense in expenses %}
+           <tr>
+               <td>{{ expense[0] }}</td>
+               {% for category in categories %}
+                   {% if category[0] == expense[2] %}
+                       <td>{{ category[1] }}</td>
+                   {% endif %}
+               {% endfor %}
+               <td>{{ expense[3] }}</td>
+               <td>{{ expense[4] }}</td>
+               <td>
+                   <a href="/edit/{{ expense[0] }}" class="btn btn-warning btn-sm">Edit</a>
+                   <a href="/delete/{{ expense[0] }}" class="btn btn-danger btn-sm">Delete</a>
+               </td>
+           </tr>
+           {% endfor %}
+       </tbody>
+   </table>
+   {% else %}
+       <p>No expenses recorded yet.</p>
+   {% endif %}
+</div>
+
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
