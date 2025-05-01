@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}Profile - Expense Tracker{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h1 class="mb-3">User Profile</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Account Information</h5>
+            </div>
+            <div class="card-body">
+                <form action="{{ url_for('profile') }}" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" value="{{ user.username }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" value="{{ user.email or '' }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="current_password" class="form-label">Current Password</label>
+                        <input type="password" class="form-control" id="current_password" name="current_password">
+                        <small class="form-text text-muted">Required only if changing password</small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="new_password" class="form-label">New Password</label>
+                        <input type="password" class="form-control" id="new_password" name="new_password">
+                        <small class="form-text text-muted">Leave blank to keep current password</small>
+                    </div>
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-primary">Update Profile</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-4">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Account Statistics</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <div class="card bg-light">
+                            <div class="card-body text-center">
+                                <h3>{{ expense_count }}</h3>
+                                <p class="mb-0">Expenses Tracked</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <div class="card bg-light">
+                            <div class="card-body text-center">
+                                <h3>{{ income_count }}</h3>
+                                <p class="mb-0">Income Entries</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <div class="card bg-light">
+                            <div class="card-body text-center">
+                                <h3>${{ "%.2f"|format(total_expenses) }}</h3>
+                                <p class="mb-0">Total Expenses</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <div class="card bg-light">
+                            <div class="card-body text-center">
+                                <h3>${{ "%.2f"|format(total_income) }}</h3>
+                                <p class="mb-0">Total Income</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card {% if balance >= 0 %}bg-success{% else %}bg-danger{% endif %} text-white">
+                            <div class="card-body text-center">
+                                <h3>${{ "%.2f"|format(balance) }}</h3>
+                                <p class="mb-0">Overall Balance</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Data Management</h5>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('export_data') }}" class="btn btn-outline-primary">
+                        <i class="fas fa-file-export me-1"></i> Export All Data
+                    </a>
+                    <a href="{{ url_for('import_data') }}" class="btn btn-outline-secondary">
+                        <i class="fas fa-file-import me-1"></i> Import Data
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
