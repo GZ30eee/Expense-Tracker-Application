@@ -1,0 +1,139 @@
+{% extends "base.html" %}
+
+{% block title %}Analytics - Expense Tracker{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h1 class="mb-3">Analytics</h1>
+        <div class="btn-group mb-3">
+            <a href="{{ url_for('analytics', period='week') }}" class="btn btn-outline-primary {% if period == 'week' %}active{% endif %}">This Week</a>
+            <a href="{{ url_for('analytics', period='month') }}" class="btn btn-outline-primary {% if period == 'month' %}active{% endif %}">This Month</a>
+            <a href="{{ url_for('analytics', period='year') }}" class="btn btn-outline-primary {% if period == 'year' %}active{% endif %}">This Year</a>
+            <a href="{{ url_for('analytics', period='all') }}" class="btn btn-outline-primary {% if period == 'all' %}active{% endif %}">All Time</a>
+        </div>
+    </div>
+    <div class="col-md-4 text-md-end">
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="downloadReportDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-download me-1"></i> Download Report
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="downloadReportDropdown">
+                <li><a class="dropdown-item" href="{{ url_for('download_report', type='expenses', period=period) }}">Expenses Report</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('download_report', type='income', period=period) }}">Income Report</a></li>
+                <li><a class="dropdown-item" href="{{ url_for('download_report', type='summary', period=period) }}">Financial Summary</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Total Expenses</h5>
+                <h2 class="card-text">${{ "%.2f"|format(total_expenses) }}</h2>
+                <p class="card-text">{{ period_name }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Total Income</h5>
+                <h2 class="card-text">${{ "%.2f"|format(total_income) }}</h2>
+                <p class="card-text">{{ period_name }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card {% if balance >= 0 %}text-white bg-info{% else %}text-white bg-danger{% endif %} mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Balance</h5>
+                <h2 class="card-text">${{ "%.2f"|format(balance) }}</h2>
+                <p class="card-text">{{ period_name }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    {% if pie_chart %}
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Expenses by Category</h5>
+            </div>
+            <div class="card-body text-center">
+                <img src="data:image/png;base64,{{ pie_chart }}" class="img-fluid" alt="Expenses by Category">
+                <div class="mt-2">
+                    <a href="{{ url_for('download_chart') }}" class="btn btn-sm btn-outline-secondary">
+                        <i class="fas fa-download me-1"></i> Download Chart
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    {% if line_chart %}
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Daily Expenses</h5>
+            </div>
+            <div class="card-body text-center">
+                <img src="data:image/png;base64,{{ line_chart }}" class="img-fluid" alt="Daily Expenses">
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Income vs Expenses</h5>
+            </div>
+            <div class="card-body text-center">
+                <img src="data:image/png;base64,{{ bar_chart }}" class="img-fluid" alt="Income vs Expenses">
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Top Expenses</h5>
+            </div>
+            <div class="card-body">
+                {% if top_expenses %}
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Category</th>
+                                <th>Description</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for expense in top_expenses %}
+                            <tr>
+                                <td>{{ expense.category }}</td>
+                                <td>{{ expense.description or '-' }}</td>
+                                <td>{{ expense.date }}</td>
+                                <td>${{ "%.2f"|format(expense.amount) }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <p class="text-center">No expenses found for this period.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
