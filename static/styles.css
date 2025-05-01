@@ -1,0 +1,127 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar-brand {
+    font-weight: 600;
+}
+
+.card {
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    margin-bottom: 1.5rem;
+}
+
+.card-header {
+    background-color: rgba(0, 0, 0, 0.03);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    padding: 0.75rem 1.25rem;
+}
+
+.btn {
+    border-radius: 0.25rem;
+}
+
+.table th {
+    font-weight: 600;
+}
+
+.footer {
+    margin-top: auto;
+    border-top: 1px solid #dee2e6;
+}
+
+.progress {
+    height: 0.8rem;
+    border-radius: 0.5rem;
+}
+
+.progress-bar {
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+/* Custom colors for cards */
+.bg-primary {
+    background-color: #3f51b5 !important;
+}
+
+.bg-success {
+    background-color: #4caf50 !important;
+}
+
+.bg-info {
+    background-color: #2196f3 !important;
+}
+
+.bg-danger {
+    background-color: #f44336 !important;
+}
+
+.bg-warning {
+    background-color: #ff9800 !important;
+}
+
+/* Form styling */
+.form-control:focus {
+    border-color: #3f51b5;
+    box-shadow: 0 0 0 0.25rem rgba(63, 81, 181, 0.25);
+}
+
+.form-select:focus {
+    border-color: #3f51b5;
+    box-shadow: 0 0 0 0.25rem rgba(63, 81, 181, 0.25);
+}
+
+/* Button styling */
+.btn-primary {
+    background-color: #3f51b5;
+    border-color: #3f51b5;
+}
+
+.btn-primary:hover {
+    background-color: #303f9f;
+    border-color: #303f9f;
+}
+
+.btn-outline-primary {
+    color: #3f51b5;
+    border-color: #3f51b5;
+}
+
+.btn-outline-primary:hover {
+    background-color: #3f51b5;
+    border-color: #3f51b5;
+}
+
+/* Alert styling */
+.alert {
+    border-radius: 0.5rem;
+}
+
+/* Modal styling */
+.modal-content {
+    border-radius: 0.5rem;
+}
+
+.modal-header {
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+}
+
+/* Dashboard cards */
+.card-title {
+    font-weight: 600;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
