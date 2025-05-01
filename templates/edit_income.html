@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Income - Expense Tracker{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h1 class="mb-3">Edit Income</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Edit Income Details</h5>
+            </div>
+            <div class="card-body">
+                <form action="{{ url_for('edit_income', id=income.id) }}" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <div class="mb-3">
+                        <label for="source" class="form-label">Source</label>
+                        <input type="text" class="form-control" id="source" name="source" value="{{ income.source }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="amount" class="form-label">Amount</label>
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            <input type="number" class="form-control" id="amount" name="amount" step="0.01" min="0.01" value="{{ income.amount }}" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="date" class="form-label">Date</label>
+                        <input type="date" class="form-control" id="date" name="date" value="{{ income.date }}" required>
+                    </div>
+                    <div class="text-end">
+                        <a href="{{ url_for('income') }}" class="btn btn-secondary me-2">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Update Income</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
