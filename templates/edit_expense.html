@@ -1,49 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-   <title>Edit Expense</title>
-</head>
+{% extends "base.html" %}
 
-<body>
+{% block title %}Edit Expense - Expense Tracker{% endblock %}
 
-<div class='container mt-5'>
-   <h1 class="text-center">Edit Expense</h1>
-
-   <!-- Centered Card Form -->
-   <div class="row justify-content-center">
-       <div class="col-md-6">
-           <form action="/edit/{{ expense[0] }}" method='POST' class='mb-4 card p-4 shadow-sm bg-light rounded'>
-               <h4>Edit Expense Details</h4>
-
-               <!-- Category selection -->
-               <select name='category_id' required class='form-control mb-3'>
-                   {% for category in categories %}
-                       <option value="{{ category[0] }}" {% if category[0] == expense[2] %}selected{% endif %}>{{ category[1] }}</option>
-                   {% endfor %}
-               </select>
-
-               <!-- Amount input -->
-               <input type='number' name='amount' placeholder='Amount' step='0.01' required class='form-control mb-3' value="{{ expense[3] }}">
-               
-               <!-- Date input -->
-               <input type='date' name='date' required class='form-control mb-3' value="{{ expense[4] }}">
-               
-               <!-- Submit button -->
-               <button type='submit' class='btn btn-primary btn-block'>Update Expense</button>
-           </form>
-
-           <!-- Link back to index -->
-           <a href="/" class="btn btn-secondary btn-block">Back to Expenses</a>
-       </div>
-   </div>
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h1 class="mb-3">Edit Expense</h1>
+    </div>
 </div>
 
-<script src='https://code.jquery.com/jquery-3.5.1.slim.min.js'></script> 
-<script src='https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js'></script> 
-<script src='https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js'></script> 
-
-</body> 
-</html>
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Edit Expense Details</h5>
+            </div>
+            <div class="card-body">
+                <form action="{{ url_for('edit_expense', id=expense.id) }}" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <div class="mb-3">
+                        <label for="category_id" class="form-label">Category</label>
+                        <select class="form-select" id="category_id" name="category_id" required>
+                            {% for category in categories %}
+                            <option value="{{ category.id }}" {% if category.id == expense.category_id %}selected{% endif %}>
+                                {{ category.name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="amount" class="form-label">Amount</label>
+                        <div class="input-group">
+                            <span class="input-group-text">$</span>
+                            <input type="number" class="form-control" id="amount" name="amount" step="0.01" min="0.01" value="{{ expense.amount }}" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="date" class="form-label">Date</label>
+                        <input type="date" class="form-control" id="date" name="date" value="{{ expense.date }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description (Optional)</label>
+                        <textarea class="form-control" id="description" name="description" rows="2">{{ expense.description or '' }}</textarea>
+                    </div>
+                    <div class="text-end">
+                        <a href="{{ url_for('index') }}" class="btn btn-secondary me-2">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Update Expense</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
