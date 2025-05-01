@@ -1,9 +1,8 @@
-Flask==2.2.2
-Flask-Login==0.6.2
+Flask==3.0.3
+Flask-Login==0.6.3
 Flask-Bcrypt==1.0.1
-matplotlib==3.7.1
-flask-wtf==1.0.1
+matplotlib==3.9.1
 fpdf==1.7.2
-numpy==1.21.6  
-scipy==1.7.3   
-numba==0.55.1
+numpy==2.0.1  # Ensure compatibility with scipy and numba if you use them
+scipy==1.14.0   # Include if you're using scipy in your application
+numba==0.60.0  # Include if you're using numba in your application
