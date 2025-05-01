@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Import Data - Expense Tracker{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h1 class="mb-3">Import Data</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Import Data from JSON File</h5>
+            </div>
+            <div class="card-body">
+                <p class="mb-3">
+                    You can import data that was previously exported from this application. 
+                    The file should be in JSON format and contain your expenses, income, categories, and budgets.
+                </p>
+                
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong>Note:</strong> Importing data will not delete your existing data. 
+                    It will add new entries and update existing ones if they match.
+                </div>
+                
+                <form action="{{ url_for('import_data') }}" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <div class="mb-3">
+                        <label for="file" class="form-label">Select JSON File</label>
+                        <input class="form-control" type="file" id="file" name="file" accept=".json" required>
+                    </div>
+                    <div class="text-end">
+                        <a href="{{ url_for('profile') }}" class="btn btn-secondary me-2">Cancel</a>
+                        <button type="submit" class="btn btn-primary">Import Data</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
